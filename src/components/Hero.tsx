@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { config } from '@/lib/config';
 
@@ -63,14 +63,16 @@ export default function Hero() {
   const line1Delay = greetingDelay + hero.greeting.length * 30 + 300;
   const line2Delay = line1Delay + hero.line1.length * 40 + 150;
 
-  const asciiText = useMemo(() => {
+  const [asciiText, setAsciiText] = useState('');
+
+  useEffect(() => {
     let text = '';
     for (let r = 0; r < 60; r++) {
       let line = '';
       for (let c = 0; c < 120; c++) line += Math.random() > 0.5 ? '1' : '0';
       text += line + '\n';
     }
-    return text;
+    setAsciiText(text);
   }, []);
 
   return (
@@ -87,7 +89,7 @@ export default function Hero() {
         <span><span className="label">handle:</span> {config.handle}</span>
         <span><span className="label">role:</span> {config.role}</span>
         <span><span className="label">xp:</span> {config.xpYears} yrs</span>
-        <span><span className="label">stack:</span> html · css · js · &amp;more</span>
+        <span><span className="label">stack:</span> rust · react · haskell · kafka</span>
       </motion.div>
 
       <h1 className="kinetic">
