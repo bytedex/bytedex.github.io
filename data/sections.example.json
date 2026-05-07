@@ -1,0 +1,9 @@
+[
+  { "id": "profile",      "enabled": true, "title": "cp_profile.json",      "hint": "curl /handles --all", "navLabel": "profile",     "treeLabel": "cp" },
+  { "id": "about",        "enabled": true, "title": "about.md",             "hint": "const me = {…}",       "navLabel": "about",       "treeLabel": "about" },
+  { "id": "experience",   "enabled": true, "title": "experience.timeline",  "hint": "scroll →",             "navLabel": "experience",  "treeLabel": "exp" },
+  { "id": "projects",     "enabled": true, "title": "projects.dir",         "hint": "ls -la ./projects",    "navLabel": "projects",    "treeLabel": "proj" },
+  { "id": "oss",          "enabled": true, "title": "open_source.activity", "hint": "git log --all",        "navLabel": "open_source", "treeLabel": "oss" },
+  { "id": "achievements", "enabled": true, "title": "wins.log",             "hint": "cat ./trophies/*",     "navLabel": "wins",        "treeLabel": "wins" },
+  { "id": "contact",      "enabled": true, "title": "contact.exec",         "hint": "./run --hire-me",      "navLabel": "contact",     "treeLabel": "cta" }
+]
