@@ -2,19 +2,12 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-
-const SECTIONS = [
-  { id: 'about', label: 'about' },
-  { id: 'experience', label: 'exp' },
-  { id: 'oss', label: 'oss' },
-  { id: 'achievements', label: 'wins' },
-  { id: 'contact', label: 'cta' },
-];
+import type { ResolvedSection } from '@/lib/sections';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const W = 80;
 
-export default function ScrollTree() {
+export default function ScrollTree({ sections }: { sections: ResolvedSection[] }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const trunkRef = useRef<SVGPathElement | null>(null);
   const trunkLenRef = useRef(0);
@@ -70,7 +63,7 @@ export default function ScrollTree() {
 
     const nodes: typeof nodesRef.current = [];
 
-    SECTIONS.forEach((s, i) => {
+    sections.forEach((s, i) => {
       const sec = document.getElementById(s.id);
       if (!sec) return;
       const r = sec.getBoundingClientRect();
@@ -119,7 +112,7 @@ export default function ScrollTree() {
       label.setAttribute('x', `${pt.x - 8}`);
       label.setAttribute('y', `${pt.y - 8}`);
       label.setAttribute('text-anchor', 'end');
-      label.textContent = s.label;
+      label.textContent = s.treeLabel;
       label.style.fontFamily = 'var(--mono)';
       label.style.fontSize = '9px';
       label.style.fill = 'var(--fg-dim)';
@@ -133,7 +126,7 @@ export default function ScrollTree() {
     });
 
     nodesRef.current = nodes;
-  }, []);
+  }, [sections]);
 
   useEffect(() => {
     const t1 = setTimeout(layout, 200);
