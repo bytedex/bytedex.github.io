@@ -1,15 +1,14 @@
 import { config } from '@/lib/config';
+import type { ResolvedSection } from '@/lib/sections';
 
-export default function Nav() {
+export default function Nav({ sections }: { sections: ResolvedSection[] }) {
   return (
     <nav className="top">
       <div className="brand">~/{config.firstName}.{config.lastName}</div>
       <div className="links">
-        <a href="#about">about</a>
-        <a href="#experience">experience</a>
-        <a href="#oss">open_source</a>
-        <a href="#achievements">wins</a>
-        <a href="#contact">contact</a>
+        {sections.map((s) => (
+          <a key={s.id} href={`#${s.id}`}>{s.navLabel}</a>
+        ))}
       </div>
       <div className="status">
         <span className="dot" />

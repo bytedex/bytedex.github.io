@@ -3,8 +3,10 @@ import { config } from '@/lib/config';
 import { fetchGitHubStats } from '@/lib/github';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
+import CPProfile from '@/components/CPProfile';
 import About from '@/components/About';
 import Experience from '@/components/Experience';
+import Projects from '@/components/Projects';
 import OpenSource from '@/components/OpenSource';
 import Achievements from '@/components/Achievements';
 import Contact from '@/components/Contact';
@@ -12,6 +14,7 @@ import Footer from '@/components/Footer';
 import ScrollTree from '@/components/ScrollTree';
 import Terminal from '@/components/Terminal';
 import KonamiGlitch from '@/components/KonamiGlitch';
+import { loadSections } from '@/lib/sections';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -21,6 +24,7 @@ function loadJSON<T>(filename: string): T {
 }
 
 export default async function Home() {
+  const sections = loadSections();
   const experience = loadJSON<ExperienceEntry[]>('experience.json');
   const achievements = loadJSON<AchievementEntry[]>('achievements.json');
 
@@ -44,10 +48,12 @@ export default async function Home() {
   return (
     <>
       <ScrollTree />
-      <Nav />
+      <Nav sections={sections} />
       <Hero />
+      <CPProfile />
       <About />
       <Experience entries={experience} />
+      <Projects />
       <OpenSource stats={ghData} />
       <Achievements entries={achievements} />
       <Contact />
