@@ -47,7 +47,7 @@ export default async function Home() {
 
   return (
     <>
-      <ScrollTree />
+      <ScrollTree sections={sections} />
       <Nav sections={sections} />
       <Hero />
       <CPProfile />
