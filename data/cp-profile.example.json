@@ -1,0 +1,30 @@
+{
+  "intro": "Short blurb about your competitive programming activity.",
+  "cards": [
+    {
+      "icon": "CF",
+      "platform": "codeforces",
+      "cornerTag": "newbie",
+      "handle": "your_handle",
+      "tier": "newbie",
+      "badge": "1200",
+      "rating": "1200",
+      "ratingMeta": ["max 1200", "Δ +0 last contest"],
+      "spark": {
+        "line": "M0,40 L100,30 L200,20",
+        "area": "M0,40 L100,30 L200,20 L200,48 L0,48 Z"
+      },
+      "meta": [
+        { "label": "solved", "value": "0", "accent": true },
+        { "label": "contests", "value": "0" },
+        { "label": "streak", "value": "0d" }
+      ]
+    }
+  ],
+  "summary": [
+    { "label": "total solved",    "value": "0" },
+    { "label": "contests played", "value": "0" },
+    { "label": "peak streak",     "value": "0 days" },
+    { "label": "favorite topic",  "value": "—" }
+  ]
+}

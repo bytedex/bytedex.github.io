@@ -61,3 +61,26 @@ export type AchievementEntry = {
   title: string;
   description: string;
 };
+
+export type CpMeta = { label: string; value: string; accent?: boolean };
+
+export type CpCard = {
+  icon: string;
+  platform: string;
+  cornerTag: string;
+  handle: string;
+  tier: string;
+  badge?: string;
+  rating: string;
+  ratingMeta: [string, string];
+  spark: { line: string; area: string };
+  meta: CpMeta[];
+};
+
+export type CpSummaryItem = { label: string; value: string };
+
+export type CpProfileData = {
+  intro: string;
+  cards: CpCard[];
+  summary: CpSummaryItem[];
+};

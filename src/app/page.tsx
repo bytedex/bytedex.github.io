@@ -1,4 +1,4 @@
-import type { ExperienceEntry, AchievementEntry } from '@/lib/config';
+import type { ExperienceEntry, AchievementEntry, CpProfileData } from '@/lib/config';
 import { config } from '@/lib/config';
 import { fetchGitHubStats } from '@/lib/github';
 import Nav from '@/components/Nav';
@@ -27,6 +27,7 @@ export default async function Home() {
   const sections = loadSections();
   const experience = loadJSON<ExperienceEntry[]>('experience.json');
   const achievements = loadJSON<AchievementEntry[]>('achievements.json');
+  const cpProfile = loadJSON<CpProfileData>('cp-profile.json');
 
   // Fetch live GitHub data (no token needed)
   const liveStats = await fetchGitHubStats();
@@ -50,7 +51,7 @@ export default async function Home() {
       <ScrollTree sections={sections} />
       <Nav sections={sections} />
       <Hero />
-      <CPProfile />
+      <CPProfile cfg={sections.find((s) => s.id === 'profile')!} data={cpProfile} />
       <About />
       <Experience entries={experience} />
       <Projects />
