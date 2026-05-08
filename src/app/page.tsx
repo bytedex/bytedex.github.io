@@ -1,6 +1,7 @@
 import type { ExperienceEntry, AchievementEntry, CpProfileData, Project } from '@/lib/config';
 import { config } from '@/lib/config';
 import { fetchGitHubStats } from '@/lib/github';
+import { applyLiveCpData } from '@/lib/cp-platforms';
 import { loadSections, ResolvedSection, SectionId } from '@/lib/sections';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
@@ -32,6 +33,7 @@ export default async function Home() {
   const projects = loadJSON<Project[]>('projects.json');
 
   const liveStats = await fetchGitHubStats();
+  const cpProfileLive = await applyLiveCpData(cpProfile, liveStats);
 
   const ghData = {
     totalContributions: liveStats?.totalContributions || config.stats.commits,
@@ -48,7 +50,7 @@ export default async function Home() {
   };
 
   const renderers: Record<SectionId, (cfg: ResolvedSection) => JSX.Element> = {
-    profile:      (c) => <CPProfile     key={c.id} cfg={c} data={cpProfile} />,
+    profile:      (c) => <CPProfile     key={c.id} cfg={c} data={cpProfileLive} />,
     about:        (c) => <About         key={c.id} cfg={c} />,
     experience:   (c) => <Experience    key={c.id} cfg={c} entries={experience} />,
     projects:     (c) => <Projects      key={c.id} cfg={c} items={projects} />,
