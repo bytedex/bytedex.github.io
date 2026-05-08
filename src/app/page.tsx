@@ -1,4 +1,4 @@
-import type { ExperienceEntry, AchievementEntry, CpProfileData } from '@/lib/config';
+import type { ExperienceEntry, AchievementEntry, CpProfileData, Project } from '@/lib/config';
 import { config } from '@/lib/config';
 import { fetchGitHubStats } from '@/lib/github';
 import Nav from '@/components/Nav';
@@ -28,6 +28,7 @@ export default async function Home() {
   const experience = loadJSON<ExperienceEntry[]>('experience.json');
   const achievements = loadJSON<AchievementEntry[]>('achievements.json');
   const cpProfile = loadJSON<CpProfileData>('cp-profile.json');
+  const projects = loadJSON<Project[]>('projects.json');
 
   // Fetch live GitHub data (no token needed)
   const liveStats = await fetchGitHubStats();
@@ -54,7 +55,7 @@ export default async function Home() {
       <CPProfile cfg={sections.find((s) => s.id === 'profile')!} data={cpProfile} />
       <About />
       <Experience entries={experience} />
-      <Projects />
+      <Projects cfg={sections.find((s) => s.id === 'projects')!} items={projects} />
       <OpenSource stats={ghData} />
       <Achievements entries={achievements} />
       <Contact />

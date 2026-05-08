@@ -84,3 +84,16 @@ export type CpProfileData = {
   cards: CpCard[];
   summary: CpSummaryItem[];
 };
+
+export type ProjectStat = { value: string; label?: string };
+
+export type Project = {
+  num: string;
+  year: string;
+  category: string;
+  name: string;
+  desc: string;
+  stack: string[];
+  featured?: boolean;
+  stats?: ProjectStat[];
+};
