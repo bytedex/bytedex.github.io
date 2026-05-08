@@ -1,10 +1,5 @@
 name: Deploy to GitHub Pages
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
@@ -27,6 +22,24 @@ jobs:
 
       - run: npm ci
 
+      - name: Verify secrets present
+        env:
+          ENV_LOCAL: ${{ secrets.ENV_LOCAL }}
+          EXPERIENCE_JSON: ${{ secrets.EXPERIENCE_JSON }}
+          ACHIEVEMENTS_JSON: ${{ secrets.ACHIEVEMENTS_JSON }}
+          CP_PROFILE_JSON: ${{ secrets.CP_PROFILE_JSON }}
+          PROJECTS_JSON: ${{ secrets.PROJECTS_JSON }}
+          SECTIONS_JSON: ${{ secrets.SECTIONS_JSON }}
+        run: |
+          missing=0
+          for v in ENV_LOCAL EXPERIENCE_JSON ACHIEVEMENTS_JSON CP_PROFILE_JSON PROJECTS_JSON SECTIONS_JSON; do
+            if [ -z "${!v}" ]; then
+              echo "::error title=Missing secret::repo secret '$v' is unset or empty — set it under Settings → Secrets and variables → Actions"
+              missing=1
+            fi
+          done
+          [ "$missing" = "0" ] || exit 1
+
       - name: Create env file
         env:
           ENV_LOCAL: ${{ secrets.ENV_LOCAL }}
@@ -47,7 +60,31 @@ jobs:
           printf '%s\n' "$PROJECTS_JSON" > data/projects.json
           printf '%s\n' "$SECTIONS_JSON" > data/sections.json
 
-      - run: npx next build
+      - name: Validate JSON data files
+        run: |
+          bad=0
+          for f in data/experience.json data/achievements.json data/cp-profile.json data/projects.json data/sections.json; do
+            if [ ! -s "$f" ]; then
+              echo "::error file=$f::file is empty — the corresponding secret may be unset"
+              bad=1
+              continue
+            fi
+            if ! node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" 2>/dev/null; then
+              echo "::error file=$f::invalid JSON — fix the secret value"
+              echo "  first 200 chars of file:"
+              head -c 200 "$f" | sed 's/^/  /'
+              echo ""
+              bad=1
+            fi
+          done
+          [ "$bad" = "0" ] || exit 1
+
+      - name: Build
+        run: npx next build 2>&1 | tee build.log
+        # If this step fails, the previous validation passed but Next.js still
+        # rejected something. Common causes: type errors, import-time exception
+        # in a server component, or a fetch in github.ts / cp-platforms.ts
+        # throwing during prerender. Inspect build.log above the error frame.
 
       - uses: actions/upload-pages-artifact@v3
         with:
