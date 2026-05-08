@@ -69,6 +69,7 @@ export type CpCard = {
   platform: string;
   cornerTag: string;
   handle: string;
+  url: string;
   tier: string;
   badge?: string;
   rating: string;
