@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import type { AchievementEntry } from '@/lib/config';
 import RevealSection from './RevealSection';
+import SectionHeader from './SectionHeader';
+import type { ResolvedSection } from '@/lib/sections';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.92, filter: 'blur(6px)' },
@@ -34,18 +36,13 @@ const badgeVariants = {
   }),
 };
 
-export default function Achievements({ entries }: { entries: AchievementEntry[] }) {
+export default function Achievements({ cfg, entries }: { cfg: ResolvedSection; entries: AchievementEntry[] }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(gridRef, { once: true, amount: 0.15 });
 
   return (
     <RevealSection id="achievements">
-      <div className="section-head">
-        <span className="num">// 05</span>
-        <span className="title">wins.log</span>
-        <span className="rule" />
-        <span>cat ./trophies/*</span>
-      </div>
+      <SectionHeader num={cfg.num} title={cfg.title} hint={cfg.hint} />
       <div className="ach-grid" ref={gridRef}>
         {entries.map((entry, i) => (
           <motion.div

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import RevealSection from './RevealSection';
+import SectionHeader from './SectionHeader';
+import type { ResolvedSection } from '@/lib/sections';
 
 type Stats = {
   totalContributions: number;
@@ -94,7 +96,7 @@ const statVariants = {
   }),
 };
 
-export default function OpenSource({ stats }: { stats: Stats }) {
+export default function OpenSource({ cfg, stats }: { cfg: ResolvedSection; stats: Stats }) {
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(gridRef, { once: true, amount: 0.3 });
 
@@ -106,12 +108,7 @@ export default function OpenSource({ stats }: { stats: Stats }) {
 
   return (
     <RevealSection id="oss">
-      <div className="section-head">
-        <span className="num">// 04</span>
-        <span className="title">open_source.activity</span>
-        <span className="rule" />
-        <span>git log --all</span>
-      </div>
+      <SectionHeader num={cfg.num} title={cfg.title} hint={cfg.hint} />
 
       <div className="gh-grid" ref={gridRef}>
         {statItems.map((s, i) => (

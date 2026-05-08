@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { config } from '@/lib/config';
 import RevealSection from './RevealSection';
+import SectionHeader from './SectionHeader';
+import type { ResolvedSection } from '@/lib/sections';
 
 const lineVariants = {
   hidden: { opacity: 0, x: -12 },
@@ -14,7 +16,7 @@ const lineVariants = {
   }),
 };
 
-export default function About() {
+export default function About({ cfg }: { cfg: ResolvedSection }) {
   const { profile, xpYears } = config;
   const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(gridRef, { once: true, amount: 0.2 });
@@ -37,12 +39,7 @@ export default function About() {
 
   return (
     <RevealSection id="about">
-      <div className="section-head">
-        <span className="num">// 02</span>
-        <span className="title">about.md</span>
-        <span className="rule" />
-        <span>{'const me = {…}'}</span>
-      </div>
+      <SectionHeader num={cfg.num} title={cfg.title} hint={cfg.hint} />
       <div className="about-grid" ref={gridRef}>
         <div className="about-copy">
           <motion.p

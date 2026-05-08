@@ -53,12 +53,12 @@ export default async function Home() {
       <Nav sections={sections} />
       <Hero />
       <CPProfile cfg={sections.find((s) => s.id === 'profile')!} data={cpProfile} />
-      <About />
-      <Experience entries={experience} />
+      <About cfg={sections.find((s) => s.id === 'about')!} />
+      <Experience cfg={sections.find((s) => s.id === 'experience')!} entries={experience} />
       <Projects cfg={sections.find((s) => s.id === 'projects')!} items={projects} />
-      <OpenSource stats={ghData} />
-      <Achievements entries={achievements} />
-      <Contact />
+      <OpenSource cfg={sections.find((s) => s.id === 'oss')!} stats={ghData} />
+      <Achievements cfg={sections.find((s) => s.id === 'achievements')!} entries={achievements} />
+      <Contact cfg={sections.find((s) => s.id === 'contact')!} />
       <Footer />
       <Terminal />
       <KonamiGlitch />
