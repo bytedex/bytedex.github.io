@@ -1,6 +1,7 @@
 import type { ExperienceEntry, AchievementEntry, CpProfileData, Project } from '@/lib/config';
 import { config } from '@/lib/config';
 import { fetchGitHubStats } from '@/lib/github';
+import { loadSections, ResolvedSection, SectionId } from '@/lib/sections';
 import Nav from '@/components/Nav';
 import Hero from '@/components/Hero';
 import CPProfile from '@/components/CPProfile';
@@ -14,9 +15,9 @@ import Footer from '@/components/Footer';
 import ScrollTree from '@/components/ScrollTree';
 import Terminal from '@/components/Terminal';
 import KonamiGlitch from '@/components/KonamiGlitch';
-import { loadSections } from '@/lib/sections';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import type { JSX } from 'react';
 
 function loadJSON<T>(filename: string): T {
   const path = join(process.cwd(), 'data', filename);
@@ -30,7 +31,6 @@ export default async function Home() {
   const cpProfile = loadJSON<CpProfileData>('cp-profile.json');
   const projects = loadJSON<Project[]>('projects.json');
 
-  // Fetch live GitHub data (no token needed)
   const liveStats = await fetchGitHubStats();
 
   const ghData = {
@@ -47,18 +47,22 @@ export default async function Home() {
     contributions: liveStats?.contributions || null,
   };
 
+  const renderers: Record<SectionId, (cfg: ResolvedSection) => JSX.Element> = {
+    profile:      (c) => <CPProfile     key={c.id} cfg={c} data={cpProfile} />,
+    about:        (c) => <About         key={c.id} cfg={c} />,
+    experience:   (c) => <Experience    key={c.id} cfg={c} entries={experience} />,
+    projects:     (c) => <Projects      key={c.id} cfg={c} items={projects} />,
+    oss:          (c) => <OpenSource    key={c.id} cfg={c} stats={ghData} />,
+    achievements: (c) => <Achievements  key={c.id} cfg={c} entries={achievements} />,
+    contact:      (c) => <Contact       key={c.id} cfg={c} />,
+  };
+
   return (
     <>
       <ScrollTree sections={sections} />
       <Nav sections={sections} />
       <Hero />
-      <CPProfile cfg={sections.find((s) => s.id === 'profile')!} data={cpProfile} />
-      <About cfg={sections.find((s) => s.id === 'about')!} />
-      <Experience cfg={sections.find((s) => s.id === 'experience')!} entries={experience} />
-      <Projects cfg={sections.find((s) => s.id === 'projects')!} items={projects} />
-      <OpenSource cfg={sections.find((s) => s.id === 'oss')!} stats={ghData} />
-      <Achievements cfg={sections.find((s) => s.id === 'achievements')!} entries={achievements} />
-      <Contact cfg={sections.find((s) => s.id === 'contact')!} />
+      {sections.map((s) => renderers[s.id](s))}
       <Footer />
       <Terminal />
       <KonamiGlitch />
