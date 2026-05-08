@@ -36,10 +36,16 @@ jobs:
         env:
           EXPERIENCE_JSON: ${{ secrets.EXPERIENCE_JSON }}
           ACHIEVEMENTS_JSON: ${{ secrets.ACHIEVEMENTS_JSON }}
+          CP_PROFILE_JSON: ${{ secrets.CP_PROFILE_JSON }}
+          PROJECTS_JSON: ${{ secrets.PROJECTS_JSON }}
+          SECTIONS_JSON: ${{ secrets.SECTIONS_JSON }}
         run: |
           mkdir -p data
           printf '%s\n' "$EXPERIENCE_JSON" > data/experience.json
           printf '%s\n' "$ACHIEVEMENTS_JSON" > data/achievements.json
+          printf '%s\n' "$CP_PROFILE_JSON" > data/cp-profile.json
+          printf '%s\n' "$PROJECTS_JSON" > data/projects.json
+          printf '%s\n' "$SECTIONS_JSON" > data/sections.json
 
       - run: npx next build
 

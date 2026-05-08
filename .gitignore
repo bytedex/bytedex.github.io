@@ -5,5 +5,8 @@ out/
 .env*.local
 data/experience.json
 data/achievements.json
+data/cp-profile.json
+data/projects.json
+data/sections.json
 *.tsbuildinfo
 next-env.d.ts
