@@ -1,0 +1,10 @@
+[
+  {
+    "num": "001",
+    "year": "2025",
+    "category": "category · subcategory",
+    "name": "project-name",
+    "desc": "One- or two-line description of what the project does and why it matters.",
+    "stack": ["lang", "framework"]
+  }
+]
