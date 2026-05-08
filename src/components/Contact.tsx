@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { config } from '@/lib/config';
 import RevealSection from './RevealSection';
+import SectionHeader from './SectionHeader';
+import type { ResolvedSection } from '@/lib/sections';
 
 const stagger = {
   hidden: {},
@@ -41,7 +43,7 @@ const socialItem = {
   },
 };
 
-export default function Contact() {
+export default function Contact({ cfg }: { cfg: ResolvedSection }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
 
@@ -54,12 +56,7 @@ export default function Contact() {
 
   return (
     <RevealSection id="contact" className="contact-block">
-      <div className="section-head">
-        <span className="num">// 06</span>
-        <span className="title">contact.exec</span>
-        <span className="rule" />
-        <span>./run --hire-me</span>
-      </div>
+      <SectionHeader num={cfg.num} title={cfg.title} hint={cfg.hint} />
 
       <motion.div
         ref={ref}

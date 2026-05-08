@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import type { ExperienceEntry } from '@/lib/config';
 import RevealSection from './RevealSection';
+import SectionHeader from './SectionHeader';
+import type { ResolvedSection } from '@/lib/sections';
 
 const cardVariants = {
   hidden: { opacity: 0, x: 60, scale: 0.94, filter: 'blur(4px)' },
@@ -38,18 +40,13 @@ const listVariants = {
   }),
 };
 
-export default function Experience({ entries }: { entries: ExperienceEntry[] }) {
+export default function Experience({ cfg, entries }: { cfg: ResolvedSection; entries: ExperienceEntry[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const inView = useInView(trackRef, { once: true, amount: 0.15 });
 
   return (
     <RevealSection id="experience">
-      <div className="section-head">
-        <span className="num">// 03</span>
-        <span className="title">experience.timeline</span>
-        <span className="rule" />
-        <span>scroll →</span>
-      </div>
+      <SectionHeader num={cfg.num} title={cfg.title} hint={cfg.hint} />
       <div className="exp-track" ref={trackRef}>
         {entries.map((entry, i) => (
           <motion.article
