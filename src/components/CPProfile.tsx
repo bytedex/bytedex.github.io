@@ -32,13 +32,17 @@ export default function CPProfile({ cfg, data }: Props) {
       </p>
       <div className="cp-grid" ref={gridRef}>
         {data.cards.map((c, i) => (
-          <motion.article
+          <motion.a
             key={c.platform}
+            href={c.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="cp-card"
             custom={i}
             variants={cardVariants}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <span className="corner-tag">{c.cornerTag}</span>
             <div className="platform">
@@ -71,7 +75,7 @@ export default function CPProfile({ cfg, data }: Props) {
                 </div>
               ))}
             </div>
-          </motion.article>
+          </motion.a>
         ))}
       </div>
       <div className="cp-summary">
