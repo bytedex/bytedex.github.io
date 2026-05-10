@@ -122,8 +122,8 @@ export default function Hero() {
       >
         <a href="#experience" className="magnetic primary"><span>view_work</span><span className="arrow">→</span></a>
         <a href="#contact" className="magnetic"><span>get_in_touch</span><span className="arrow">→</span></a>
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--fg-faint)', marginLeft: '12px' }}>
-          press <kbd style={{ border: '1px solid var(--border)', padding: '2px 6px', borderRadius: '2px', color: 'var(--fg-dim)' }}>~</kbd> for terminal
+        <span className="terminal-hint">
+          press <kbd>~</kbd> for terminal
         </span>
       </motion.div>
 
