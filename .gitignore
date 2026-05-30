@@ -8,5 +8,6 @@ data/achievements.json
 data/cp-profile.json
 data/projects.json
 data/sections.json
+data/ats-skills.json
 *.tsbuildinfo
 next-env.d.ts

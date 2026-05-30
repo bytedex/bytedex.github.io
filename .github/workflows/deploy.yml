@@ -56,6 +56,7 @@ jobs:
           CP_PROFILE_JSON: ${{ secrets.CP_PROFILE_JSON }}
           PROJECTS_JSON: ${{ secrets.PROJECTS_JSON }}
           SECTIONS_JSON: ${{ secrets.SECTIONS_JSON }}
+          ATS_SKILLS_JSON: ${{ secrets.ATS_SKILLS_JSON }}
         run: |
           mkdir -p data
           printf '%s\n' "$EXPERIENCE_JSON" > data/experience.json
@@ -63,11 +64,18 @@ jobs:
           printf '%s\n' "$CP_PROFILE_JSON" > data/cp-profile.json
           printf '%s\n' "$PROJECTS_JSON" > data/projects.json
           printf '%s\n' "$SECTIONS_JSON" > data/sections.json
+          # ATS skills: use the secret if set, else fall back to the committed example.
+          if [ -n "$ATS_SKILLS_JSON" ]; then
+            printf '%s\n' "$ATS_SKILLS_JSON" > data/ats-skills.json
+          else
+            echo "::warning title=ATS_SKILLS_JSON unset::falling back to data/ats-skills.example.json"
+            cp data/ats-skills.example.json data/ats-skills.json
+          fi
 
       - name: Validate JSON data files
         run: |
           bad=0
-          for f in data/experience.json data/achievements.json data/cp-profile.json data/projects.json data/sections.json; do
+          for f in data/experience.json data/achievements.json data/cp-profile.json data/projects.json data/sections.json data/ats-skills.json; do
             if [ ! -s "$f" ]; then
               echo "::error file=$f::file is empty — the corresponding secret may be unset"
               bad=1
