@@ -1,0 +1,14 @@
+[
+  { "canonical": "Go", "aliases": ["go", "golang"], "category": "languages", "has": true },
+  { "canonical": "Node.js", "aliases": ["node.js", "nodejs", "node"], "category": "backend", "has": true },
+  { "canonical": "React", "aliases": ["react.js", "reactjs", "react"], "category": "frontend", "has": true },
+  { "canonical": "React Native", "aliases": ["react native", "react-native"], "category": "frontend", "has": true },
+  { "canonical": "AWS", "aliases": ["aws", "amazon web services"], "category": "cloud", "has": true },
+
+  { "canonical": "SDLC", "aliases": ["sdlc", "software development life cycle"], "category": "practices", "has": true },
+  { "canonical": "Leadership", "aliases": ["leadership", "team lead", "led a team"], "category": "leadership", "has": true },
+  { "canonical": "Mentorship", "aliases": ["mentored", "mentoring", "mentorship"], "category": "leadership", "has": true },
+
+  { "canonical": "Spring Boot", "aliases": ["spring boot", "springboot", "spring"], "category": "gap", "has": false },
+  { "canonical": "Terraform", "aliases": ["terraform", "iac"], "category": "gap", "has": false }
+]
