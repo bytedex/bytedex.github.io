@@ -122,6 +122,7 @@ export default function Hero() {
       >
         <a href="#experience" className="magnetic primary"><span>view_work</span><span className="arrow">→</span></a>
         <a href="#contact" className="magnetic"><span>get_in_touch</span><span className="arrow">→</span></a>
+        <a href={config.resumeUrl} target="_blank" rel="noopener noreferrer" className="magnetic"><span>resume</span><span className="arrow">→</span></a>
         <span className="terminal-hint">
           press <kbd>~</kbd> for terminal
         </span>

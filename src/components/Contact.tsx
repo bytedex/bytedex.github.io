@@ -78,6 +78,8 @@ export default function Contact({ cfg }: { cfg: ResolvedSection }) {
 
         <motion.a
           href={config.resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="email-link"
           variants={fadeScale}
         >
